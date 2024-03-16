@@ -45,10 +45,31 @@ public class Main extends JFrame {
             }
         });
 
+        // Création d'un bouton pour acheter l'action sélectionnée
+        JButton acheterButton = new JButton("Acheter");
+        acheterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tableView.getSelectedRow();
+                if (selectedRow != -1) {
+                    Action actionSelectionnee = actionsDisponibles.get(selectedRow);
+                    System.out.println("Vous avez sélectionné l'action : " + actionSelectionnee.getLibelle());
+                    // Ajoutez ici la logique pour acheter l'action sélectionnée
+                } else {
+                    System.out.println("Aucune action sélectionnée.");
+                }
+            }
+        });
+
+        // Création du conteneur pour les boutons d'action
+        JPanel buttonsPanel = new JPanel(new BorderLayout());
+        buttonsPanel.add(acheterButton, BorderLayout.NORTH);
+        buttonsPanel.add(vendreButton, BorderLayout.SOUTH);
+
         // Création du conteneur principal
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JScrollPane(tableView), BorderLayout.CENTER);
-        panel.add(vendreButton, BorderLayout.SOUTH);
+        panel.add(buttonsPanel, BorderLayout.SOUTH);       
 
         // Configuration de la fenêtre principale
         setTitle("Sélection d'actions à vendre");
