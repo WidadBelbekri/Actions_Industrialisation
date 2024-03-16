@@ -6,6 +6,8 @@
 package tp04.metier;
 
 import java.util.Objects;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -15,6 +17,16 @@ public abstract class Action {
 
     private String libelle;
 
+    private StringProperty libelleProperty; // Propriété observable pour le libellé
+
+        // Méthode pour accéder à la propriété observable du libellé
+    public StringProperty libelleProperty() {
+        if (libelleProperty == null) {
+            libelleProperty = new SimpleStringProperty(this, "libelle");
+        }
+        return libelleProperty;
+    }
+    
     /**
      * Get the value of libelle
      *

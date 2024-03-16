@@ -5,9 +5,7 @@
  */
 package tp04.metier;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -89,16 +87,4 @@ public class Portefeuille {
         }
         return total;
     }
-    
-     public List<ActionSimple> consulterActionsSimples() {
-        List<ActionSimple> actionsSimples = new ArrayList<>();
-        for (LignePortefeuille ligne : mapLignes.values()) {
-            Action action = ligne.getAction();
-            if (action instanceof ActionSimple) {
-                actionsSimples.add((ActionSimple) action);
-            }
-        }
-        return actionsSimples;
-    }
-
 }

@@ -37,8 +37,8 @@ limitations under the License.
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <sonar.organization>actions-industrialisation</sonar.organization>
-        <sonar.projectKey>WidadBelbekri_Actions_Industrialisation</sonar.projectKey>
+        <sonar.organization>davidnavarreics</sonar.organization>
+        <sonar.projectKey>DavidNavarreICS_SharePortfolio</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.java.libraries></sonar.java.libraries>
     </properties>
@@ -82,7 +82,17 @@ limitations under the License.
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+                    <!-- Plugin pour gérer les dépendances JavaFX -->
+        <plugin>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.8</version>
+            <configuration>
+                <javafxVersion>17</javafxVersion>
+                <mainClass>tp04.metier.Main</mainClass> <!-- Remplacez Main par votre classe principale -->
+            </configuration>
+        </plugin>
+    </plugins>
     </build>
     <dependencies>
         <dependency>
@@ -102,6 +112,16 @@ limitations under the License.
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.2</version>
             <scope>test</scope>
+        </dependency>
+            <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17</version>
         </dependency>
     </dependencies>
     <reporting>
