@@ -15,7 +15,8 @@ import java.util.Map;
 public class Portefeuille {
 
     Map<Action, LignePortefeuille> mapLignes;
-
+    
+  
     private class LignePortefeuille {
 
         private Action action;
@@ -65,6 +66,15 @@ public class Portefeuille {
             }
         }
     }
+    
+      public int getQuantite(Action action) {
+        if (mapLignes.containsKey(action)) {
+            return mapLignes.get(action).getQte();
+        } else {
+            return 0;
+        }
+    }
+
 
     public String toString() {
         return this.mapLignes.toString();
