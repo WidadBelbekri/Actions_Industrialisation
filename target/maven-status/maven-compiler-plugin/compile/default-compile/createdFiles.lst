@@ -1,8 +1,12 @@
 tp04\metier\ActionComposee.class
 tp04\metier\Cours.class
 tp04\metier\Main.class
+tp04interface\InterfacePortefeuille$2.class
 tp04\metier\ActionSimple.class
 tp04\metier\Jour.class
 tp04\metier\Action.class
+tp04interface\InterfacePortefeuille.class
 tp04\metier\Portefeuille.class
+tp04interface\InterfacePortefeuille$1.class
 tp04\metier\Portefeuille$LignePortefeuille.class
+tp04interface\InterfacePortefeuille$3.class
