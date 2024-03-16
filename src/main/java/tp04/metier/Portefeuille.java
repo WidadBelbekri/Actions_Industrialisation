@@ -14,38 +14,11 @@ import java.util.Map;
  */
 public class Portefeuille {
 
-    Map<Action, LignePortefeuille> mapLignes;
+
+     Map<Action, LignePortefeuille> mapLignes;
     
   
-    private class LignePortefeuille {
-
-        private Action action;
-
-        private int qte;
-
-        public int getQte() {
-            return qte;
-        }
-
-        public void setQte(int qte) {
-            this.qte = qte;
-        }
-
-        public Action getAction() {
-            return this.action;
-        }
-
-        public LignePortefeuille(Action action, int qte) {
-            this.action = action;
-            this.qte = qte;
-        }
-
-        public String toString() {
-            return Integer.toString(qte);
-        }
-    }
-
-    public Portefeuille() {
+      public Portefeuille() {
         this.mapLignes = new HashMap();
     }
 
@@ -74,8 +47,8 @@ public class Portefeuille {
             return 0;
         }
     }
-
-
+      
+    
     public String toString() {
         return this.mapLignes.toString();
     }
@@ -87,4 +60,36 @@ public class Portefeuille {
         }
         return total;
     }
+    
+      public class LignePortefeuille {
+
+        private Action action;
+
+        private int qte;
+
+        public int getQte() {
+            return qte;
+        }
+
+        public void setQte(int qte) {
+            this.qte = qte;
+        }
+
+        public Action getAction() {
+            return this.action;
+        }
+
+        public LignePortefeuille(Action action, int qte) {
+            this.action = action;
+            this.qte = qte;
+        }
+
+        public String toString() {
+            return Integer.toString(qte);
+        }
+    }
+      
+      public Map<Action, LignePortefeuille> getMapLignes() {
+    return mapLignes;
+}
 }
