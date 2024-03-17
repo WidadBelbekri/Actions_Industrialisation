@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main extends JFrame {
 
@@ -45,21 +46,40 @@ public class Main extends JFrame {
             }
         });
 
-        // Création d'un bouton pour acheter l'action sélectionnée
-        JButton acheterButton = new JButton("Acheter");
-        acheterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tableView.getSelectedRow();
-                if (selectedRow != -1) {
-                    Action actionSelectionnee = actionsDisponibles.get(selectedRow);
-                    System.out.println("Vous avez sélectionné l'action : " + actionSelectionnee.getLibelle());
-                    // Ajoutez ici la logique pour acheter l'action sélectionnée
-                } else {
-                    System.out.println("Aucune action sélectionnée.");
-                }
+// Création d'un bouton pour acheter l'action sélectionnée
+JButton acheterButton = new JButton("Acheter");
+acheterButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int selectedRow = tableView.getSelectedRow();
+        if (selectedRow != -1) {
+            Action actionSelectionnee = actionsDisponibles.get(selectedRow);
+            System.out.println("Vous avez sélectionné l'action : " + actionSelectionnee.getLibelle());
+
+            // Demander à l'utilisateur de saisir la quantité à acheter
+            String quantiteStr = JOptionPane.showInputDialog("Entrez la quantité à acheter : ");
+            if (quantiteStr != null && !quantiteStr.isEmpty()) {
+                int quantite = Integer.parseInt(quantiteStr);
+
+                // Mettre à jour le portefeuille du client en ajoutant l'action achetée
+                Portefeuille portefeuille = new Portefeuille();
+                portefeuille.acheter(actionSelectionnee, quantite);
+
+                // Mettre à jour l'interface graphique pour refléter les changements
+                updateTableModel(portefeuille);
+
+                // Afficher la fenêtre du portefeuille
+                PortefeuilleWindow portefeuilleWindow = new PortefeuilleWindow(portefeuille);
+                portefeuilleWindow.setVisible(true);
+            } else {
+                System.out.println("Quantité invalide.");
             }
-        });
+        } else {
+            System.out.println("Aucune action sélectionnée.");
+        }
+    }
+});
+
 
         // Création du conteneur pour les boutons d'action
         JPanel buttonsPanel = new JPanel(new BorderLayout());
@@ -69,7 +89,7 @@ public class Main extends JFrame {
         // Création du conteneur principal
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JScrollPane(tableView), BorderLayout.CENTER);
-        panel.add(buttonsPanel, BorderLayout.SOUTH);       
+        panel.add(buttonsPanel, BorderLayout.SOUTH);
 
         // Configuration de la fenêtre principale
         setTitle("Sélection d'actions à vendre");
@@ -77,6 +97,16 @@ public class Main extends JFrame {
         setContentPane(panel);
         pack();
         setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
+    }
+
+    // Méthode pour mettre à jour le modèle de la table avec les données du portefeuille
+    private void updateTableModel(Portefeuille portefeuille) {
+        tableModel.setRowCount(0); // Effacer les lignes existantes de la table
+        for (Map.Entry<Action, Portefeuille.LignePortefeuille> entry : portefeuille.getMapLignes().entrySet()) {
+            Action action = entry.getKey();
+            Portefeuille.LignePortefeuille lignePortefeuille = entry.getValue();
+            tableModel.addRow(new Object[]{action.getLibelle(), lignePortefeuille.getQte()});
+        }
     }
 
     public static void main(String[] args) {
