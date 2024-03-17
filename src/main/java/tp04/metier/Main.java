@@ -14,6 +14,7 @@ public class Main extends JFrame {
     private JTable tableView;
     private DefaultTableModel tableModel;
     private List<Action> actionsDisponibles;
+      Main mainInstance = this; 
 
     public Main() {
         // Création d'une liste d'actions disponibles
@@ -59,7 +60,7 @@ public class Main extends JFrame {
                         updateTableModel(portefeuille);
 
                         // Afficher la fenêtre du portefeuille avec l'action achetée en plus
-                        PortefeuilleWindow portefeuilleWindow = new PortefeuilleWindow(portefeuille);
+                        PortefeuilleWindow portefeuilleWindow = new PortefeuilleWindow(portefeuille, mainInstance);
                         portefeuilleWindow.setVisible(true);
                     } else {
                         System.out.println("Quantité invalide.");
@@ -95,7 +96,22 @@ public class Main extends JFrame {
         }
     }
     
-    
+        public void updateQuantiteDisponible(ActionSimple action, int quantiteVendue) {
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Action a = actionsDisponibles.get(i);
+            if (a instanceof ActionSimple && a.equals(action)) {
+                ((ActionSimple) a).ajouterQuantite(quantiteVendue);
+                tableModel.setValueAt(a.getQuantite(), i, 1); // Mettre à jour la quantité dans le modèle de la table
+                break;
+            }
+        }
+    }
+
+
+   
+
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

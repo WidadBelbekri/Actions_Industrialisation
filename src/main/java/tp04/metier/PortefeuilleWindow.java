@@ -31,9 +31,13 @@ public class PortefeuilleWindow extends JFrame {
     private DefaultTableModel tableModel;
     private JTable tableView;
     private Portefeuille portefeuille;
+    private Main mainInstance;
 
-    public PortefeuilleWindow(Portefeuille portefeuille) {
+
+    public PortefeuilleWindow(Portefeuille portefeuille,Main mainInstance) {
         this.portefeuille = portefeuille;
+        this.mainInstance = mainInstance;
+
 
         // Création du modèle de table
         tableModel = new DefaultTableModel();
@@ -66,6 +70,7 @@ public class PortefeuilleWindow extends JFrame {
                         int quantiteAVendre = Integer.parseInt(quantiteStr);
                         if (quantiteAVendre > 0 && quantiteAVendre <= quantiteTotale) {
                             portefeuille.vendre(actionSelectionnee, quantiteAVendre);
+                            updateQuantiteDisponible((ActionSimple)actionSelectionnee, quantiteAVendre); // Appel de la méthode pour mettre à jour la quantité des actions disponibles
                             updateTableModel();
                         } else {
                             JOptionPane.showMessageDialog(null, "La quantité à vendre est invalide ou dépasse la quantité disponible.");
@@ -78,7 +83,15 @@ public class PortefeuilleWindow extends JFrame {
                 }
             }
         });
-
+        JButton retourButton = new JButton("Retour aux actions disponibles");
+        retourButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Ferme la fenêtre du portefeuille
+                mainInstance.setVisible(true); // Affiche la fenêtre principale
+            }
+        });
+        
         // Configuration de la fenêtre
         setTitle("Portefeuille du client");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fermer uniquement cette fenêtre
@@ -88,11 +101,23 @@ public class PortefeuilleWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tableView);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Ajout du bouton "Vendre"
-        add(vendreButton, BorderLayout.SOUTH);
+         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(vendreButton);
+        buttonPanel.add(retourButton);
+
+
+        // Ajout du conteneur des boutons dans la fenêtre
+        add(buttonPanel, BorderLayout.SOUTH);
+
 
         pack(); // Redimensionner la fenêtre selon le contenu
         setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
+    }
+
+   
+    // Méthode pour mettre à jour la quantité des actions disponibles dans la fenêtre principale
+    public void updateQuantiteDisponible(ActionSimple action, int quantiteVendue) {
+        mainInstance.updateQuantiteDisponible(action, quantiteVendue);
     }
 
     // Méthode pour mettre à jour le modèle de la table avec les données du portefeuille
@@ -105,3 +130,6 @@ public class PortefeuilleWindow extends JFrame {
         }
     }
 }
+
+
+
