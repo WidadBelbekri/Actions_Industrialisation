@@ -18,7 +18,13 @@ public abstract class Action {
     private String libelle;
 
     private StringProperty libelleProperty; // Propriété observable pour le libellé
-
+    
+    //Imane
+    public abstract int getQuantite();
+    
+    // Méthode pour soustraire la quantité achetée de la quantité disponible IMANE
+    public abstract void soustraireQuantite(int quantite);
+    
         // Méthode pour accéder à la propriété observable du libellé
     public StringProperty libelleProperty() {
         if (libelleProperty == null) {

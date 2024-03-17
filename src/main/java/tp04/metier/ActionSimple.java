@@ -11,18 +11,32 @@ import java.util.Map;
 /**
  *
  * @author somebody
+ * Imane : Quantite
  */
 public class ActionSimple extends Action {
 
     // attribut lien
     private Map<Jour, Cours> mapCours;
+    private int quantite;
 
-    // constructeur
-    public ActionSimple(String libelle) {
-        // Action simple initialisée comme 1 action
+    // Constructeur avec la quantité initiale
+    public ActionSimple(String libelle, int quantite) {
         super(libelle);
+        this.quantite = quantite;
         // init spécifique
         this.mapCours = new HashMap();
+    }
+
+    // Redéfinition de la méthode pour obtenir la quantité disponible IMANE
+    @Override
+    public int getQuantite() {
+        return quantite;
+    }
+    
+    // Implémentation de la méthode soustraireQuantite IMANE
+    @Override
+    public void soustraireQuantite(int quantite) {
+        this.quantite -= quantite;
     }
 
     // enrg possible si pas de cours pour ce jour

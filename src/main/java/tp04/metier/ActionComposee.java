@@ -16,12 +16,26 @@ public class ActionComposee extends Action {
 
     // attribut lien
     Map<ActionSimple, Float> mapPanier;
+    //Imane
+    private int quantite;
 
     public ActionComposee(String libelle) {
         super(libelle);
         this.mapPanier = new HashMap();
     }
 
+    // Redéfinition de la méthode pour obtenir la quantité disponible IMANE
+    @Override
+    public int getQuantite() {
+        return quantite;
+    }
+    
+    // Implémentation de la méthode soustraireQuantite IMANE
+    @Override
+    public void soustraireQuantite(int quantite) {
+        this.quantite -= quantite;
+    }
+    
     public void enrgComposition(ActionSimple as, float pourcentage) {
         this.mapPanier.put(as, pourcentage);
     }
