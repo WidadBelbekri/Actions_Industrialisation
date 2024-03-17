@@ -64,7 +64,11 @@ public class AccueilInterface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir l'interface d'achat
-                AchatInterface achatInterface = new AchatInterface();
+                Portefeuille portefeuille = new Portefeuille();
+                PortefeuilleInterface portefeuilleInterface = new PortefeuilleInterface(portefeuille);
+
+
+                AchatInterface achatInterface = new AchatInterface(portefeuille,portefeuilleInterface);
                 achatInterface.setVisible(true);
                 dispose(); // Fermer l'interface d'accueil
             }

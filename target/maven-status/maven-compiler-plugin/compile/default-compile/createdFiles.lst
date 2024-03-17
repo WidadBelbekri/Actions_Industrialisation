@@ -7,6 +7,8 @@ tp04\metier\Action.class
 tp04interface\VenteInterface.class
 tp04\metier\Main$3.class
 tp04interface\AccueilInterface$3.class
+tp04interface\AchatInterface$3.class
+tp04interface\AchatInterface$2.class
 tp04\metier\Portefeuille$LignePortefeuille.class
 tp04\metier\ActionComposee.class
 tp04\metier\Cours.class
@@ -14,6 +16,7 @@ tp04\metier\Main.class
 tp04\metier\Main$1.class
 tp04\metier\Jour.class
 tp04interface\AccueilInterface$4.class
+tp04interface\AchatInterface$1.class
 tp04interface\AchatInterface.class
 tp04interface\AccueilInterface.class
 tp04interface\PortefeuilleInterface.class

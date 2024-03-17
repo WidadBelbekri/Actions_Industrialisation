@@ -28,11 +28,11 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import tp04.metier.ActionSimple;
 import tp04.metier.Portefeuille;
-import java.util.Map.Entry;
 
 public class PortefeuilleInterface extends JFrame {
 
     private Portefeuille portefeuille;
+    private JTable tableView; 
 
     public PortefeuilleInterface(Portefeuille portefeuille) {
         this.portefeuille = portefeuille;
@@ -54,34 +54,47 @@ public class PortefeuilleInterface extends JFrame {
             tableModel.addRow(new Object[]{action.getLibelle(), quantite});
         }
         // Création du tableau avec le modèle de données
-        JTable tableView = new JTable(tableModel);
+        tableView = new JTable(tableModel);
 
         // Ajout du tableau à un JScrollPane pour permettre le défilement s'il y a beaucoup de données
         JScrollPane scrollPane = new JScrollPane(tableView);
 
         // Ajout du JScrollPane au contenu de la fenêtre
         getContentPane().add(scrollPane, BorderLayout.CENTER);
-    
-    
-    // Création du bouton "Retour Accueil"
-    JButton retourAccueilButton = new JButton("Retour Accueil");
-    retourAccueilButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // Ferme cette fenêtre
-            dispose(); 
 
-            // Ajoutez ici le code pour afficher l'écran d'accueil
-            AccueilInterface accueil = new AccueilInterface(); // Crée une nouvelle instance de l'écran d'accueil
-            accueil.setVisible(true); // Rend l'écran d'accueil visible
+        // Création du bouton "Retour Accueil"
+        JButton retourAccueilButton = new JButton("Retour Accueil");
+        retourAccueilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Ferme cette fenêtre
+                dispose();
+
+                // Ajoutez ici le code pour afficher l'écran d'accueil
+                AccueilInterface accueil = new AccueilInterface(); // Crée une nouvelle instance de l'écran d'accueil
+                accueil.setVisible(true); // Rend l'écran d'accueil visible
+            }
+        });
+
+        // Ajout du bouton "Retour Accueil" en bas de la fenêtre
+        getContentPane().add(retourAccueilButton, BorderLayout.SOUTH);
+    }
+
+    // Ajoutez la méthode refreshTable ici
+    public void refreshTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) tableView.getModel();
+        tableModel.setRowCount(0); // Supprime toutes les lignes existantes du tableau
+
+        for (var entry : portefeuille.getMapLignes().entrySet()) {
+            tp04.metier.Action action = entry.getKey();
+            int quantite = entry.getValue().getQte();
+            tableModel.addRow(new Object[]{action.getLibelle(), quantite});
         }
-    });
-
-    // Ajout du bouton "Retour Accueil" en bas de la fenêtre
-    getContentPane().add(retourAccueilButton, BorderLayout.SOUTH);
     }
     
-    
+    public JTable getTableView() {
+        return tableView;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -89,12 +102,16 @@ public class PortefeuilleInterface extends JFrame {
             public void run() {
                 // Création d'un portefeuille fictif pour tester l'interface
                 Portefeuille portefeuille = new Portefeuille();
-                portefeuille.acheter(new ActionSimple("Action 1"), 10);
-                portefeuille.acheter(new ActionSimple("Action 2"), 5);
+                PortefeuilleInterface portefeuilleInterface = new PortefeuilleInterface(portefeuille);
+
+                 // Création et affichage de l'interface d'achat
+                AchatInterface achatInterface = new AchatInterface(portefeuille,portefeuilleInterface);
 
                 // Création et affichage de l'interface de consultation du portefeuille
-                PortefeuilleInterface portefeuilleInterface = new PortefeuilleInterface(portefeuille);
                 portefeuilleInterface.setVisible(true);
+
+                // Rafraîchir l'affichage du portefeuille après l'achat
+                portefeuilleInterface.refreshTable();
             }
         });
     }
