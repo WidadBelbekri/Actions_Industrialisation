@@ -38,6 +38,11 @@ public class ActionSimple extends Action {
     public void soustraireQuantite(int quantite) {
         this.quantite -= quantite;
     }
+    
+     // Méthode pour ajouter une quantité à l'action après vente WIDAD
+    public void ajouterQuantite(int quantite) {
+        this.quantite += quantite;
+    }
 
     // enrg possible si pas de cours pour ce jour
     public void enrgCours(Jour j, float v) {
