@@ -31,21 +31,7 @@ public class Main extends JFrame {
         }
         tableView = new JTable(tableModel);
 
-        // Création d'un bouton pour vendre l'action sélectionnée
-        JButton vendreButton = new JButton("Vendre");
-        vendreButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tableView.getSelectedRow();
-                if (selectedRow != -1) {
-                    Action actionSelectionnee = actionsDisponibles.get(selectedRow);
-                    System.out.println("Vous avez sélectionné l'action : " + actionSelectionnee.getLibelle());
-                    // Ajoutez ici la logique pour vendre l'action sélectionnée
-                } else {
-                    System.out.println("Aucune action sélectionnée.");
-                }
-            }
-        });
+        
 
         // Création d'un bouton pour acheter l'action sélectionnée
         JButton acheterButton = new JButton("Acheter");
@@ -87,7 +73,6 @@ public class Main extends JFrame {
         // Création du conteneur pour les boutons d'action
         JPanel buttonsPanel = new JPanel(new BorderLayout());
         buttonsPanel.add(acheterButton, BorderLayout.NORTH);
-        buttonsPanel.add(vendreButton, BorderLayout.SOUTH);
 
         // Création du conteneur principal
         JPanel panel = new JPanel(new BorderLayout());
@@ -109,6 +94,8 @@ public class Main extends JFrame {
             tableModel.setValueAt(action.getQuantite(), i, 1); // Mettre à jour la quantité dans la table
         }
     }
+    
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
