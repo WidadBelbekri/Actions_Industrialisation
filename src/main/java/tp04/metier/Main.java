@@ -18,9 +18,14 @@ public class Main extends JFrame {
     public Main() {
         // Création d'une liste d'actions disponibles
         actionsDisponibles = new ArrayList<>();
-        actionsDisponibles.add(new ActionSimple("Action 1", 10)); // Exemple : 10 actions disponibles
-        actionsDisponibles.add(new ActionSimple("Action 2", 20)); // Exemple : 20 actions disponibles
-        actionsDisponibles.add(new ActionSimple("Action 3", 30)); // Exemple : 30 actions disponibles
+        actionsDisponibles.add(new ActionSimple("Action 1", 10)); 
+        actionsDisponibles.add(new ActionSimple("Action 2", 20)); 
+        actionsDisponibles.add(new ActionSimple("Action 3", 30)); 
+        
+        Portefeuille portefeuille = new Portefeuille();
+        portefeuille.acheter(new ActionSimple("Action 1", 10), 10);
+        portefeuille.acheter(new ActionSimple("Action 2", 20), 20);
+        portefeuille.acheter(new ActionSimple("Action 3", 30), 30);
 
         // Création de la table
         tableModel = new DefaultTableModel();
@@ -79,6 +84,32 @@ public class Main extends JFrame {
         panel.add(new JScrollPane(tableView), BorderLayout.CENTER);
         panel.add(buttonsPanel, BorderLayout.SOUTH);
 
+        // la création du bouton "Voir actionnaire majoritaire" pour chaque action
+        JButton voirActionnaireButton = new JButton("Voir actionnaire majoritaire");
+        voirActionnaireButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tableView.getSelectedRow();
+                if (selectedRow != -1) {
+                    Action actionSelectionnee = actionsDisponibles.get(selectedRow);
+                    Portefeuille portefeuille = new Portefeuille();
+                    // Affichez l'actionnaire majoritaire dans une boîte de dialogue
+                    Action actionnaireMajoritaire = portefeuille.actionnaireMajoritaire();
+                    if (actionnaireMajoritaire != null) {
+                        JOptionPane.showMessageDialog(null, "L'actionnaire majoritaire est : " + actionnaireMajoritaire.getLibelle());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Aucun actionnaire majoritaire.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aucune action sélectionnée.");
+                }
+            }
+        });
+
+        // Ajoutez le bouton "Voir actionnaire majoritaire" au conteneur des boutons d'action
+        buttonsPanel.add(voirActionnaireButton, BorderLayout.CENTER);
+
+        
         // Configuration de la fenêtre principale
         setTitle("Sélection d'actions à vendre");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,8 +125,6 @@ public class Main extends JFrame {
             tableModel.setValueAt(action.getQuantite(), i, 1); // Mettre à jour la quantité dans la table
         }
     }
-    
-    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

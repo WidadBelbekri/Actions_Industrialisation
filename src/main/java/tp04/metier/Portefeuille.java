@@ -74,5 +74,25 @@ public class Portefeuille {
         public String toString() {
             return Integer.toString(qte);
         }
+        
+        
     }
+    
+    // Méthode Imane
+public Action actionnaireMajoritaire() {
+    Action actionnaireMajoritaire = null;
+    int maxQuantite = 0;
+
+    for (Map.Entry<Action, LignePortefeuille> entry : mapLignes.entrySet()) {
+        Action action = entry.getKey();
+        int quantite = entry.getValue().getQte();
+        if (quantite > maxQuantite) {
+            maxQuantite = quantite;
+            actionnaireMajoritaire = action;
+        }
+    }
+
+    return actionnaireMajoritaire;
+}
+
 }
