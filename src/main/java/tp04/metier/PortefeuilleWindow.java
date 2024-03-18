@@ -33,8 +33,10 @@ public class PortefeuilleWindow extends JFrame {
     private Portefeuille portefeuille;
 
     public PortefeuilleWindow(Portefeuille portefeuille) {
-        this.portefeuille = portefeuille;
 
+        // Utilisez la variable portefeuille passée en paramètre
+        this.portefeuille = portefeuille;
+        
         // Création du modèle de table
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Libellé");

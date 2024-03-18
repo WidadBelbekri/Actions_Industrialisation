@@ -22,10 +22,16 @@ public class Main extends JFrame {
         actionsDisponibles.add(new ActionSimple("Action 2", 20)); 
         actionsDisponibles.add(new ActionSimple("Action 3", 30)); 
         
+        // Création du portefeuille
         Portefeuille portefeuille = new Portefeuille();
+        // Ajoutez les actions au portefeuille
         portefeuille.acheter(new ActionSimple("Action 1", 10), 10);
         portefeuille.acheter(new ActionSimple("Action 2", 20), 20);
         portefeuille.acheter(new ActionSimple("Action 3", 30), 30);
+
+        // Créez la fenêtre du portefeuille en utilisant le même objet Portefeuille
+        PortefeuilleWindow portefeuilleWindow = new PortefeuilleWindow(portefeuille);
+        portefeuilleWindow.setVisible(true);
 
         // Création de la table
         tableModel = new DefaultTableModel();

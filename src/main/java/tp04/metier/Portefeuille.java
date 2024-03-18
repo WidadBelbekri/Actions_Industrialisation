@@ -93,6 +93,6 @@ public Action actionnaireMajoritaire() {
     }
 
     return actionnaireMajoritaire;
-}
+} 
 
 }
