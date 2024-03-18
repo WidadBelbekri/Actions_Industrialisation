@@ -25,9 +25,9 @@ public class Main extends JFrame {
         // Création du portefeuille
         Portefeuille portefeuille = new Portefeuille();
         // Ajoutez les actions au portefeuille
-        portefeuille.acheter(new ActionSimple("Action 1", 10), 10);
-        portefeuille.acheter(new ActionSimple("Action 2", 20), 20);
-        portefeuille.acheter(new ActionSimple("Action 3", 30), 30);
+        portefeuille.acheter(new ActionSimple("Action 1", 10), 10, new Client("Imane1"));
+        portefeuille.acheter(new ActionSimple("Action 2", 20), 20, new Client("Imane2"));
+        portefeuille.acheter(new ActionSimple("Action 3", 30), 30, new Client("Imane3"));
 
         // Créez la fenêtre du portefeuille en utilisant le même objet Portefeuille
         PortefeuilleWindow portefeuilleWindow = new PortefeuilleWindow(portefeuille);
@@ -61,7 +61,7 @@ public class Main extends JFrame {
 
                         // Mettre à jour le portefeuille du client en ajoutant l'action achetée
                         Portefeuille portefeuille = new Portefeuille();
-                        portefeuille.acheter(actionSelectionnee, quantite);
+                        portefeuille.acheter(actionSelectionnee, quantite, new Client("IMANE"));
 
                         // Soustraire la quantité achetée de la quantité disponible dans la liste d'actions disponibles
                         actionSelectionnee.soustraireQuantite(quantite);
@@ -91,26 +91,26 @@ public class Main extends JFrame {
         panel.add(buttonsPanel, BorderLayout.SOUTH);
 
         // la création du bouton "Voir actionnaire majoritaire" pour chaque action
-        JButton voirActionnaireButton = new JButton("Voir actionnaire majoritaire");
-        voirActionnaireButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tableView.getSelectedRow();
-                if (selectedRow != -1) {
-                    Action actionSelectionnee = actionsDisponibles.get(selectedRow);
-                    Portefeuille portefeuille = new Portefeuille();
-                    // Affichez l'actionnaire majoritaire dans une boîte de dialogue
-                    Action actionnaireMajoritaire = portefeuille.actionnaireMajoritaire();
-                    if (actionnaireMajoritaire != null) {
-                        JOptionPane.showMessageDialog(null, "L'actionnaire majoritaire est : " + actionnaireMajoritaire.getLibelle());
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Aucun actionnaire majoritaire.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Aucune action sélectionnée.");
-                }
+JButton voirActionnaireButton = new JButton("Voir actionnaire majoritaire");
+voirActionnaireButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int selectedRow = tableView.getSelectedRow();
+        if (selectedRow != -1) {
+            Action actionSelectionnee = actionsDisponibles.get(selectedRow);
+            Portefeuille portefeuille = new Portefeuille();
+            // Affichez l'actionnaire majoritaire dans une boîte de dialogue
+            Client actionnaireMajoritaire = portefeuille.actionnaireMajoritaire(actionSelectionnee);
+            if (actionnaireMajoritaire != null) {
+                JOptionPane.showMessageDialog(null, "L'actionnaire majoritaire est : " + actionnaireMajoritaire.getNom());
+            } else {
+                JOptionPane.showMessageDialog(null, "Aucun actionnaire majoritaire.");
             }
-        });
+        } else {
+            JOptionPane.showMessageDialog(null, "Aucune action sélectionnée.");
+        }
+    }
+});
 
         // Ajoutez le bouton "Voir actionnaire majoritaire" au conteneur des boutons d'action
         buttonsPanel.add(voirActionnaireButton, BorderLayout.CENTER);

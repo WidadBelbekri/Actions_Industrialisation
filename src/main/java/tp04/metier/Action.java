@@ -5,6 +5,8 @@
  */
 package tp04.metier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -19,6 +21,25 @@ public abstract class Action {
 
     private StringProperty libelleProperty; // Propriété observable pour le libellé
     
+    //IMANE +++
+    private List<Client> clients;
+    
+    public Action(String libelle) {
+        this.libelle = libelle;
+        //IMANE +++
+        this.clients = new ArrayList<>();
+
+    }
+
+    // Méthode pour ajouter un client à cette action IMANE +++
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+    
+    // Méthode pour récupérer la liste des clients associés à cette action IMANE +++
+    public List<Client> getClients() {
+        return clients;
+    }
     //Imane
     public abstract int getQuantite();
     
@@ -40,10 +61,6 @@ public abstract class Action {
      */
     public String getLibelle() {
         return libelle;
-    }
-
-    public Action(String libelle) {
-        this.libelle = libelle;
     }
 
     public abstract float valeur(Jour j);

@@ -21,13 +21,17 @@ public class Portefeuille {
     public Portefeuille() {
         this.mapLignes = new HashMap<>();
     }
-
-    public void acheter(Action a, int q) {
+   
+    //IMANE +++
+    public void acheter(Action a, int q, Client client) {
         if (!this.mapLignes.containsKey(a)) {
             this.mapLignes.put(a, new LignePortefeuille(a, q));
         } else {
             this.mapLignes.get(a).setQte(this.mapLignes.get(a).getQte() + q);
         }
+        
+        // Ajoutez le client à la liste des clients associés à cette action
+        a.addClient(client);
     }
 
     public void vendre(Action a, int q) {
@@ -78,21 +82,23 @@ public class Portefeuille {
         
     }
     
-    // Méthode Imane
-public Action actionnaireMajoritaire() {
-    Action actionnaireMajoritaire = null;
-    int maxQuantite = 0;
+    // Méthode IMANE +++
+    public Client actionnaireMajoritaire(Action action) {
+        Client actionnaireMajoritaire = null;
+        int maxQuantite = 0;
 
-    for (Map.Entry<Action, LignePortefeuille> entry : mapLignes.entrySet()) {
-        Action action = entry.getKey();
-        int quantite = entry.getValue().getQte();
-        if (quantite > maxQuantite) {
-            maxQuantite = quantite;
-            actionnaireMajoritaire = action;
+        // Parcourez tous les clients associés à cette action
+        for (Client client : action.getClients()) {
+            // Obtenez la quantité détenue par ce client pour cette action
+            int quantite = mapLignes.get(action).getQte();
+
+            // Comparez avec la quantité maximale
+            if (quantite > maxQuantite) {
+                maxQuantite = quantite;
+                actionnaireMajoritaire = client;
+            }
         }
+
+        return actionnaireMajoritaire;
     }
-
-    return actionnaireMajoritaire;
-} 
-
 }
